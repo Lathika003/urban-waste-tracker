@@ -1,10 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/wasteController');
+import express from "express";
+import { create, deleteWaste, fetch, update } from "../controller/wasteController.js";
 
-router.post('/', controller.createWasteRequest);
-router.get('/', controller.getAllRequests);
-router.put('/:id', controller.updateRequestStatus);
-router.delete('/:id', controller.deleteRequest);
+const route = express.Router();
 
-module.exports = router;
+route.get("/getall", fetch);
+route.post("/create", create);
+route.put("/update/:id", update);
+route.delete("/delete/:id", deleteWaste);
+
+export default route;

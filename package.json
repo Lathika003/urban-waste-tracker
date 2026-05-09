@@ -1,0 +1,29 @@
+{
+  "name": "urban-waste-tracker",
+  "version": "1.0.0",
+  "description": "This project is a web-based software solution developed for the **Web Services and Technology (IT2234)** module. It addresses the real-world problem of urban waste management by providing a structured backend system for collection tracking.",
+  "homepage": "https://github.com/Lathika003/urban-waste-tracker#readme",
+  "bugs": {
+    "url": "https://github.com/Lathika003/urban-waste-tracker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lathika003/urban-waste-tracker.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
