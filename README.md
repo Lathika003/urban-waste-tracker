@@ -1,94 +1,100 @@
-# Urban Waste Tracker 🌍♻️
+# Urban Waste Tracker
 
-A modern, full-stack web application designed to address the real-world problem of urban waste management. It provides a structured system for residents to report waste for collection and for municipal authorities to track and manage these requests efficiently.
+## Problem Description
+Urban areas often face significant challenges when it comes to efficiently tracking, reporting, and managing different types of waste (such as organic, plastic, and electronic waste). Traditional systems lack real-time visibility, leading to delayed collections, resource mismanagement, and environmental hazards. Citizens have no direct way to alert authorities about uncollected waste, and collection teams struggle to prioritize their routes.
 
-## 🚀 Features
+## Proposed Solution
+**Urban Waste Tracker** is a modern, real-time web application designed to bridge the gap between citizens and waste management teams. It provides a platform where users can instantly report waste locations along with their specific categories. The system features a live dashboard that displays active reports, allowing collection teams to monitor, filter by category or status, and efficiently mark tasks as "Collected" once the waste has been cleared.
 
-- **Request Submission**: Users can submit new waste pickup requests specifying location and waste type.
-- **Real-time Tracking**: View a list of all current and past pickup requests.
-- **Status Management**: Authorities can update the status of requests (e.g., from "Pending" to "Collected").
-- **Record Maintenance**: Easily remove completed or incorrect records.
-- **Modern UI**: A premium, responsive Dark Theme UI built with React and Tailwind CSS v4.
-- **RESTful API**: A robust Node.js and Express backend connected to MongoDB.
+## Features
+- **Real-Time Reporting:** Instantly report new waste findings with specific locations.
+- **Waste Categorization:** Categorize waste into Plastic, Organic, E-Waste, or General/Mixed.
+- **Status Tracking:** Track the lifecycle of a report from **Pending** to **Collected**.
+- **Live Dashboard:** View all reports on a highly responsive, modern dark-themed UI.
+- **Advanced Filtering:** Filter reports by waste category or collection status.
+- **Timestamps:** Precise tracking of when a report was created and when it was collected.
 
-## 💻 Tech Stack
+## Technologies Used
+- **Frontend:** React.js (Vite), Tailwind CSS (v4), Lucide React (Icons), Axios.
+- **Backend:** Node.js, Express.js.
+- **Database:** MongoDB, Mongoose (with comprehensive validation and error handling).
 
-**Frontend:**
-- React (via Vite)
-- Tailwind CSS v4
-- Lucide React (Icons)
-- Axios (HTTP API Client)
+## API Endpoints
 
-**Backend:**
-- Node.js
-- Express.js
-- MongoDB & Mongoose
-- dotenv, cors, body-parser
+### 1. Create a New Report
+- **URL:** `/api/waste/create`
+- **Method:** `POST`
+- **Body Example:**
+  ```json
+  {
+    "location": "No 15, Galle Road, Colombo",
+    "wasteType": "E-Waste",
+    "status": "Pending",
+    "description": "Old televisions and monitors left on the pavement."
+  }
+  ```
 
-## 🛠️ Installation & Setup
+### 2. Get All Reports
+- **URL:** `/api/waste/getall`
+- **Method:** `GET`
+- **Response:** Returns an array of all waste report objects.
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) installed
-- [MongoDB](https://www.mongodb.com/) installed and running (or a MongoDB Atlas URI)
+### 3. Get a Specific Report
+- **URL:** `/api/waste/getone/:id`
+- **Method:** `GET`
+- **Response:** Returns the specific waste report matching the ID.
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/Lathika003/urban-waste-tracker.git
-cd urban-waste-tracker
-```
+### 4. Update Report Status
+- **URL:** `/api/waste/update/:id`
+- **Method:** `PUT`
+- **Body Example:**
+  ```json
+  {
+    "status": "Collected"
+  }
+  ```
 
-### 2. Backend Setup
-1. Open the root directory (`urban-waste-tracker`) in your terminal.
-2. Install dependencies:
+### 5. Delete a Report
+- **URL:** `/api/waste/delete/:id`
+- **Method:** `DELETE`
+- **Response:** Confirms deletion of the specific report.
+
+## Setup Instructions
+
+1. **Clone the repository** (if using version control) or download the project files.
+2. **Install Backend Dependencies:**
+   Open a terminal in the root directory (`urban-waste-tracker`) and run:
    ```bash
    npm install
    ```
-3. Create a `.env` file in the root directory and add your MongoDB connection string and Port:
-   ```env
-   PORT=5000
-   MONGO_URL=your_mongodb_connection_string_here
-   ```
-4. Start the backend server:
-   ```bash
-   npm start
-   ```
-   *The server should run on `http://localhost:8000`*
-
-### 3. Frontend Setup
-1. Open a new terminal and navigate to the `frontend` directory:
+3. **Install Frontend Dependencies:**
+   Navigate to the `frontend` directory and run:
    ```bash
    cd frontend
-   ```
-2. Install dependencies:
-   ```bash
    npm install
    ```
-3. Start the development server:
-   ```bash
-   npm run dev
+4. **Environment Configuration:**
+   Create a `.env` file in the root directory (`urban-waste-tracker`) and add the following variables:
+   ```env
+   PORT=8000
+   MONGO_URL=your_mongodb_connection_string_here
    ```
-4. Open your browser and navigate to the URL provided by Vite (usually `http://localhost:5173`).
 
-## 📡 API Endpoints
+## How to Run the Project
 
-The backend API handles data in JSON format. The base URL is `http://localhost:5000/api/waste`.
+To run this application locally, you will need to start both the backend server and the frontend development server.
 
-| Method | Endpoint | Description | Request Body Example |
-| :--- | :--- | :--- | :--- |
-| **GET** | `/getall` | Fetch all waste pickup requests | N/A |
-| **POST** | `/create` | Create a new pickup request | `{"location": "Colombo", "wasteType": "Organic"` |
-| **PUT** | `/update/:id` | Update the status of a request | `{"status": "Collected"}` |
-| **DELETE** | `/delete/:id` | Delete a specific request | N/A |
-
-## 📁 Project Structure
-
-```text
-urban-waste-tracker/
-├── frontend/             # React Frontend App (Vite + Tailwind CSS v4)
-├── models/               # MongoDB Mongoose Schemas (e.g., wasteModel.js)
-├── routes/               # Express Routes (e.g., wasteRoutes.js)
-├── controller/           # Route Controllers (Logic for API endpoints)
-├── .env                  # Environment Variables (DB URL, Port)
-├── server.js             # Main Backend Server Entry Point
-└── package.json          # Backend Dependencies & Scripts
+**1. Start the Backend Server**
+Open a terminal in the root directory (`urban-waste-tracker`) and run:
+```bash
+npm start
 ```
+*(The server should start running on `http://localhost:8000`)*
+
+**2. Start the Frontend Server**
+Open a new terminal, navigate to the frontend directory, and run:
+```bash
+cd frontend
+npm run dev
+```
+*(The frontend application will be accessible at `http://localhost:5173`)*
