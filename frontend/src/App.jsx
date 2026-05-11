@@ -298,19 +298,27 @@ function App() {
                   <div className="relative z-10 mt-6 pt-4 border-t border-gray-800 flex justify-between items-center text-[11px] font-medium">
                     <div className="flex flex-col gap-1 text-gray-500">
                       <span className="font-mono text-gray-600 uppercase">#{item._id?.substring(0, 6)}</span>
-                      <span className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5" />
-                        {new Date(item.date || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                      </span>
+                      <div className="flex flex-col gap-1 mt-1">
+                        <span className="flex items-center gap-1.5 text-[10px] sm:text-[11px]">
+                          <Clock className="w-3 h-3" />
+                          <span className="uppercase tracking-wider opacity-70">Reported:</span> {new Date(item.createdAt || Date.now()).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                        {item.status !== 'Pending' && (
+                          <span className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-blue-400">
+                            <CheckCircle2 className="w-3 h-3" />
+                            <span className="uppercase tracking-wider opacity-70">{item.status === 'Collected' ? 'Collected:' : 'Updated:'}</span> {new Date(item.updatedAt || Date.now()).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     {item.status === 'Pending' && (
                       <button
                         onClick={() => handleMarkCollected(item._id)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/50 hover:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all duration-300 z-20 cursor-pointer"
+                        className="flex items-center gap-1 px-2 py-1 rounded-md bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/50 hover:shadow-[0_0_8px_rgba(59,130,246,0.2)] transition-all duration-300 z-20 cursor-pointer ml-2 self-end shrink-0"
                       >
-                        <CheckCircle2 className="w-3.5 h-3.5" />
-                        <span className="font-bold tracking-wider uppercase">Mark Collected</span>
+                        <CheckCircle2 className="w-3 h-3" />
+                        <span className="text-[9px] font-bold tracking-wider uppercase">Mark Collected</span>
                       </button>
                     )}
                   </div>
