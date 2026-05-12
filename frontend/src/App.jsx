@@ -23,7 +23,13 @@ function App() {
     try {
       const res = await axios.get(`${API_URL}/getall`);
       setReports(res.data);
-    } catch (err) { console.error("Error fetching data"); }
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        setReports([]);
+      } else {
+        console.error("Error fetching data", err);
+      }
+    }
   };
 
   useEffect(() => { fetchReports(); }, []);
@@ -64,6 +70,16 @@ function App() {
       await fetchReports();
     } catch (err) {
       alert("Failed to update status!");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this report?")) return;
+    try {
+      await axios.delete(`${API_URL}/delete/${id}`);
+      await fetchReports();
+    } catch (err) {
+      alert("Failed to delete report!");
     }
   };
 
@@ -312,15 +328,24 @@ function App() {
                       </div>
                     </div>
 
-                    {item.status === 'Pending' && (
+                    <div className="flex gap-2 ml-2 self-end shrink-0 z-20">
+                      {item.status === 'Pending' && (
+                        <button
+                          onClick={() => handleMarkCollected(item._id)}
+                          className="flex items-center gap-1 px-2 py-1 rounded-md bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/50 hover:shadow-[0_0_8px_rgba(59,130,246,0.2)] transition-all duration-300 cursor-pointer"
+                        >
+                          <CheckCircle2 className="w-3 h-3" />
+                          <span className="text-[9px] font-bold tracking-wider uppercase">Mark Collected</span>
+                        </button>
+                      )}
                       <button
-                        onClick={() => handleMarkCollected(item._id)}
-                        className="flex items-center gap-1 px-2 py-1 rounded-md bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/50 hover:shadow-[0_0_8px_rgba(59,130,246,0.2)] transition-all duration-300 z-20 cursor-pointer ml-2 self-end shrink-0"
+                        onClick={() => handleDelete(item._id)}
+                        className="flex items-center gap-1 px-2 py-1 rounded-md bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-500/50 hover:shadow-[0_0_8px_rgba(239,68,68,0.2)] transition-all duration-300 cursor-pointer"
                       >
-                        <CheckCircle2 className="w-3 h-3" />
-                        <span className="text-[9px] font-bold tracking-wider uppercase">Mark Collected</span>
+                        <Trash2 className="w-3 h-3" />
+                        <span className="text-[9px] font-bold tracking-wider uppercase">Delete</span>
                       </button>
-                    )}
+                    </div>
                   </div>
                 </div>
               ))
